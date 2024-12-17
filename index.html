@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="ANSI">
+    <meta charset="EUC-KR">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Å¸·Î Ä«µå »Ì±â</title>
+    <title>íƒ€ë¡œ ì¹´ë“œ ë½‘ê¸°</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,90 +68,90 @@
     </style>
 </head>
 <body>
-    <h1>Å¸·Î Ä«µå »Ì±â</h1>
-    <button onclick="shuffleCards()">Ä«µå ¼¯±â</button>
+    <h1>íƒ€ë¡œ ì¹´ë“œ ë½‘ê¸°</h1>
+    <button onclick="shuffleCards()">ì¹´ë“œ ì„ê¸°</button>
     <div id="card-container"></div>
     <div id="selected-container"></div>
 
     <script>
 const tarotCards = [
-    { name: "The Fool", image: "The_Fool.jpg", meaning: "»õ·Î¿î ½ÃÀÛ°ú ¸ğÇèÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "The Magician", image: "The_Magician.jpg", meaning: "Ã¢ÀÇ·Â°ú ÀÚ¿øÀ» È°¿ëÇÏ¼¼¿ä." },
-    { name: "The High Priestess", image: "The_High_Priestess.jpg", meaning: "³»¸éÀÇ ÁöÇı¸¦ µû¸£¼¼¿ä." },
-    { name: "The Empress", image: "The_Empress.jpg", meaning: "Ç³¿ä¿Í »ç¶ûÀ» »óÂ¡ÇÕ´Ï´Ù." },
-    { name: "The Emperor", image: "The_Emperor.jpg", meaning: "Áú¼­¿Í ±ÇÀ§¸¦ ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "The Hierophant", image: "The_Hierophant.jpg", meaning: "ÀüÅë°ú °¡¸£Ä§À» µû¸£¼¼¿ä." },
-    { name: "The Lovers", image: "The_Lovers.jpg", meaning: "°ü°è¿Í Áß¿äÇÑ ¼±ÅÃÀÇ ¼ø°£ÀÔ´Ï´Ù." },
-    { name: "The Chariot", image: "The_Chariot.jpg", meaning: "°á´Ü·Â°ú ¼º°øÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "Strength", image: "Strength.jpg", meaning: "ÀÎ³»¿Í ¿ë±â°¡ ÇÊ¿äÇÕ´Ï´Ù." },
-    { name: "The Hermit", image: "The_Hermit.jpg", meaning: "ÀÚ¾Æ¼ºÂûÀÇ ½Ã°£ÀÌ ÇÊ¿äÇÕ´Ï´Ù." },
-    { name: "Wheel of Fortune", image: "Wheel_of_Fortune.jpg", meaning: "¿î¸íÀÇ º¯È­¸¦ ¸ÂÀÌÇÒ ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Justice", image: "Justice.jpg", meaning: "°øÁ¤ÇÔ°ú ±ÕÇüÀ» À¯ÁöÇÏ¼¼¿ä." },
-    { name: "The Hanged Man", image: "The_Hanged_Man.jpg", meaning: "»õ·Î¿î °üÁ¡°ú Èñ»ıÀÌ ÇÊ¿äÇÕ´Ï´Ù." },
-    { name: "Death", image: "Death.jpg", meaning: "º¯È­¿Í »õ·Î¿î ½ÃÀÛÀÇ »óÂ¡ÀÔ´Ï´Ù." },
-    { name: "Temperance", image: "Temperance.jpg", meaning: "Á¶È­¿Í ±ÕÇüÀ» ÀÌ·ç¼¼¿ä." },
-    { name: "The Devil", image: "The_Devil.jpg", meaning: "À¯È¤°ú ÁıÂø¿¡¼­ ¹ş¾î³ª¼¼¿ä." },
-    { name: "The Tower", image: "The_Tower.jpg", meaning: "¿¹»óÄ¡ ¸øÇÑ º¯È­¿Í Ãæ°İÀÌ ÀÖÀ» ¼ö ÀÖ½À´Ï´Ù." },
-    { name: "The Star", image: "The_Star.jpg", meaning: "Èñ¸Á°ú ¿µ°¨À» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "The Moon", image: "The_Moon.jpg", meaning: "ºÒÈ®½ÇÇÔ°ú °¨Á¤À» Á÷½ÃÇÏ¼¼¿ä." },
-    { name: "The Sun", image: "The_Sun.jpg", meaning: "Çàº¹°ú ¼º°øÀÌ Ã£¾Æ¿É´Ï´Ù." },
-    { name: "Judgement", image: "Judgement.jpg", meaning: "ÀÚ±â ¹İ¼º°ú »õ·Î¿î ±âÈ¸ÀÔ´Ï´Ù." },
-    { name: "The World", image: "The_World.jpg", meaning: "¿Ï¼º°ú ¼ºÃëÀÇ ½Ã±âÀÔ´Ï´Ù." },
-	    { name: "Ace of Cups", image: "Ace_of_Cups.jpg", meaning: "»õ·Î¿î °¨Á¤°ú »ç¶ûÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Two of Cups", image: "Two_of_Cups.jpg", meaning: "Á¶È­·Î¿î °ü°è¿Í ÆÄÆ®³Ê½ÊÀÔ´Ï´Ù." },
-    { name: "Three of Cups", image: "Three_of_Cups.jpg", meaning: "±â»İ°ú ÃàÇÏÀÇ ¼ø°£ÀÔ´Ï´Ù." },
-    { name: "Four of Cups", image: "Four_of_Cups.jpg", meaning: "¹«°ü½É°ú ³»Àû °í¹ÎÀÇ ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Five of Cups", image: "Five_of_Cups.jpg", meaning: "»ó½Ç°¨°ú ÈÄÈ¸ÀÇ °¨Á¤ÀÔ´Ï´Ù." },
-    { name: "Six of Cups", image: "Six_of_Cups.jpg", meaning: "Ãß¾ï°ú °ú°ÅÀÇ È¸»óÀÌ ´Ù°¡¿É´Ï´Ù." },
-    { name: "Seven of Cups", image: "Seven_of_Cups.jpg", meaning: "È¥¶õ°ú ¼±ÅÃÀÇ ¼ø°£ÀÔ´Ï´Ù." },
-    { name: "Eight of Cups", image: "Eight_of_Cups.jpg", meaning: "¶°³²°ú »õ·Î¿î ½ÃÀÛÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "Nine of Cups", image: "Nine_of_Cups.jpg", meaning: "¼Ò¸ÁÀÌ ÀÌ·ç¾îÁö´Â ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Ten of Cups", image: "Ten_of_Cups.jpg", meaning: "°¡Á·°ú °ü°èÀÇ ¿ÏÀüÇÑ Çàº¹ÀÔ´Ï´Ù." },
-    { name: "Ace of Pentacles", image: "Ace_of_Pentacles.jpg", meaning: "¹°ÁúÀû ¼º°ø°ú ±âÈ¸ÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Two of Pentacles", image: "Two_of_Pentacles.jpg", meaning: "±ÕÇü°ú ´ÙÀç´Ù´ÉÇÔÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Three of Swords", image: "Three_of_Swords.jpg", meaning: "½½ÇÄ°ú ÀÌº°ÀÇ »óÂ¡ÀÔ´Ï´Ù." },
-    { name: "Four of Wands", image: "Four_of_Wands.jpg", meaning: "ÃàÇÏ¿Í ¾ÈÁ¤À» ÀÇ¹ÌÇÕ´Ï´Ù." },
-	    { name: "Five of Wands", image: "Five_of_Wands.jpg", meaning: "°æÀï°ú °¥µîÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "Six of Wands", image: "Six_of_Wands.jpg", meaning: "¼º°ø°ú ÀÎÁ¤ÀÇ ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Seven of Wands", image: "Seven_of_Wands.jpg", meaning: "¹æ¾î¿Í µµÀüÀÇ ½Ã°£ÀÔ´Ï´Ù." },
-    { name: "Eight of Wands", image: "Eight_of_Wands.jpg", meaning: "ºü¸¥ ÁøÀü°ú º¯È­°¡ ÀÖ½À´Ï´Ù." },
-    { name: "Nine of Wands", image: "Nine_of_Wands.jpg", meaning: "Áö¼ÓÀûÀÎ ³ë·Â°ú ¹æ¾î°¡ ÇÊ¿äÇÕ´Ï´Ù." },
-    { name: "Ten of Wands", image: "Ten_of_Wands.jpg", meaning: "¹«°Å¿î Ã¥ÀÓ°ú ºÎ´ãÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Page of Wands", image: "Page_of_Wands.jpg", meaning: "»õ·Î¿î ¾ÆÀÌµğ¾î¿Í Å½ÇèÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Knight of Wands", image: "Knight_of_Wands.jpg", meaning: "¿­Á¤°ú ¸ğÇèÀûÀÎ Çàµ¿À» »óÂ¡ÇÕ´Ï´Ù." },
-    { name: "Queen of Wands", image: "Queen_of_Wands.jpg", meaning: "ÀÚ½Å°¨°ú Ã¢ÀÇ·ÂÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "King of Wands", image: "King_of_Wands.jpg", meaning: "¸®´õ½Ê°ú ºñÀüÀ» °¡Áø »ç¶÷ÀÔ´Ï´Ù." },
-	    { name: "Ace of Swords", image: "Ace_of_Swords.jpg", meaning: "Á¤È®ÇÑ »ç°í¿Í »õ·Î¿î ¾ÆÀÌµğ¾îÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Two of Swords", image: "Two_of_Swords.jpg", meaning: "°áÁ¤ÀÇ °¥¸²±æ°ú °¥µîÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "Three of Swords", image: "Three_of_Swords.jpg", meaning: "½½ÇÄ°ú ÀÌº°ÀÇ »óÂ¡ÀÔ´Ï´Ù." },
-    { name: "Four of Swords", image: "Four_of_Swords.jpg", meaning: "ÈŞ½Ä°ú È¸º¹ÀÇ ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Five of Swords", image: "Five_of_Swords.jpg", meaning: "½Â¸® ÈÄÀÇ °¥µî°ú ÈÄÈ¸ÀÔ´Ï´Ù." },
-    { name: "Six of Swords", image: "Six_of_Swords.jpg", meaning: "ÆòÈ­¿Í »õ·Î¿î ½ÃÀÛÀ» ÇâÇÑ ¿©ÇàÀÔ´Ï´Ù." },
-    { name: "Seven of Swords", image: "Seven_of_Swords.jpg", meaning: "ºñ¹Ğ°ú ¼ÓÀÓ¼öÀÇ À§ÇèÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Eight of Swords", image: "Eight_of_Swords.jpg", meaning: "Á¦ÇÑµÈ »óÈ²°ú µÎ·Á¿òÀ» ÀÇ¹ÌÇÕ´Ï´Ù." },
-    { name: "Nine of Swords", image: "Nine_of_Swords.jpg", meaning: "ºÒ¾È°ú °ÆÁ¤À¸·Î ÀÎÇÑ °íÅëÀÔ´Ï´Ù." },
-    { name: "Ten of Swords", image: "Ten_of_Swords.jpg", meaning: "¹è½Å°ú ³¡À» ¸ÂÀÌÇÏ´Â ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Page of Swords", image: "Page_of_Swords.jpg", meaning: "È£±â½É°ú »õ·Î¿î Á¤º¸¿¡ ´ëÇÑ Å½±¸ÀÔ´Ï´Ù." },
-    { name: "Knight of Swords", image: "Knight_of_Swords.jpg", meaning: "½Å¼ÓÇÑ Çàµ¿°ú °áÁ¤ÀûÀÎ ¼ø°£À» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Queen of Swords", image: "Queen_of_Swords.jpg", meaning: "¸íÈ®ÇÑ »ç°í¿Í Á÷°ü·ÂÀ» °¡Áø »ç¶÷ÀÔ´Ï´Ù." },
-    { name: "King of Swords", image: "King_of_Swords.jpg", meaning: "³í¸®Àû »ç°í¿Í °á´Ü·ÂÀ» °¡Áø »ç¶÷ÀÔ´Ï´Ù." },
-	    { name: "Ace of Pentacles", image: "Ace_of_Pentacles.jpg", meaning: "¹°ÁúÀû ¼º°ø°ú ±âÈ¸ÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Two of Pentacles", image: "Two_of_Pentacles.jpg", meaning: "±ÕÇü°ú ´ÙÀç´Ù´ÉÇÔÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Three of Pentacles", image: "Three_of_Pentacles.jpg", meaning: "Çù·Â°ú ÆÀ¿öÅ©¸¦ ÅëÇÑ ¼º°øÀÔ´Ï´Ù." },
-    { name: "Four of Pentacles", image: "Four_of_Pentacles.jpg", meaning: "ÀçÁ¤ÀûÀÎ ¾ÈÁ¤°ú ÁıÂøÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Five of Pentacles", image: "Five_of_Pentacles.jpg", meaning: "ÀçÁ¤Àû ¾î·Á¿ò°ú °áÇÌÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Six of Pentacles", image: "Six_of_Pentacles.jpg", meaning: "±ÕÇü°ú ³ª´®ÀÇ ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Seven of Pentacles", image: "Seven_of_Pentacles.jpg", meaning: "ÀÎ³»¿Í ¼º°ú¸¦ ±â´Ù¸®´Â ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Eight of Pentacles", image: "Eight_of_Pentacles.jpg", meaning: "±â¼ú°ú ³ë·ÂÀ¸·Î ¼ºÃëÇÏ´Â ½Ã±âÀÔ´Ï´Ù." },
-    { name: "Nine of Pentacles", image: "Nine_of_Pentacles.jpg", meaning: "¹°ÁúÀû Ç³¿ä¿Í µ¶¸³ÀûÀÎ ¼ºÃëÀÔ´Ï´Ù." },
-    { name: "Ten of Pentacles", image: "Ten_of_Pentacles.jpg", meaning: "°¡Á·°ú ¼¼´ë °£ÀÇ ¹°ÁúÀû Ç³¿ä¿Í ¾ÈÁ¤ÀÔ´Ï´Ù." },
-    { name: "Page of Pentacles", image: "Page_of_Pentacles.jpg", meaning: "ÇĞ½À°ú »õ·Î¿î ±âÈ¸ÀÇ ½ÃÀÛÀÔ´Ï´Ù." },
-    { name: "Knight of Pentacles", image: "Knight_of_Pentacles.jpg", meaning: "¼º½ÇÇÔ°ú ²ÙÁØÇÔÀ» ³ªÅ¸³À´Ï´Ù." },
-    { name: "Queen of Pentacles", image: "Queen_of_Pentacles.jpg", meaning: "¾ÈÁ¤°ú ¹°ÁúÀû Ç³¿ä¸¦ Ãß±¸ÇÏ´Â »ç¶÷ÀÔ´Ï´Ù." },
-    { name: "King of Pentacles", image: "King_of_Pentacles.jpg", meaning: "ºÎ¿Í ¾ÈÁ¤ÀûÀÎ ¼ºÃë¸¦ ÀÌ·é »ç¶÷ÀÔ´Ï´Ù." },
+    { name: "The Fool", image: "The_Fool.jpg", meaning: "ìƒˆë¡œìš´ ì‹œì‘ê³¼ ëª¨í—˜ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "The Magician", image: "The_Magician.jpg", meaning: "ì°½ì˜ë ¥ê³¼ ìì›ì„ í™œìš©í•˜ì„¸ìš”." },
+    { name: "The High Priestess", image: "The_High_Priestess.jpg", meaning: "ë‚´ë©´ì˜ ì§€í˜œë¥¼ ë”°ë¥´ì„¸ìš”." },
+    { name: "The Empress", image: "The_Empress.jpg", meaning: "í’ìš”ì™€ ì‚¬ë‘ì„ ìƒì§•í•©ë‹ˆë‹¤." },
+    { name: "The Emperor", image: "The_Emperor.jpg", meaning: "ì§ˆì„œì™€ ê¶Œìœ„ë¥¼ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "The Hierophant", image: "The_Hierophant.jpg", meaning: "ì „í†µê³¼ ê°€ë¥´ì¹¨ì„ ë”°ë¥´ì„¸ìš”." },
+    { name: "The Lovers", image: "The_Lovers.jpg", meaning: "ê´€ê³„ì™€ ì¤‘ìš”í•œ ì„ íƒì˜ ìˆœê°„ì…ë‹ˆë‹¤." },
+    { name: "The Chariot", image: "The_Chariot.jpg", meaning: "ê²°ë‹¨ë ¥ê³¼ ì„±ê³µì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "Strength", image: "Strength.jpg", meaning: "ì¸ë‚´ì™€ ìš©ê¸°ê°€ í•„ìš”í•©ë‹ˆë‹¤." },
+    { name: "The Hermit", image: "The_Hermit.jpg", meaning: "ìì•„ì„±ì°°ì˜ ì‹œê°„ì´ í•„ìš”í•©ë‹ˆë‹¤." },
+    { name: "Wheel of Fortune", image: "Wheel_of_Fortune.jpg", meaning: "ìš´ëª…ì˜ ë³€í™”ë¥¼ ë§ì´í•  ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Justice", image: "Justice.jpg", meaning: "ê³µì •í•¨ê³¼ ê· í˜•ì„ ìœ ì§€í•˜ì„¸ìš”." },
+    { name: "The Hanged Man", image: "The_Hanged_Man.jpg", meaning: "ìƒˆë¡œìš´ ê´€ì ê³¼ í¬ìƒì´ í•„ìš”í•©ë‹ˆë‹¤." },
+    { name: "Death", image: "Death.jpg", meaning: "ë³€í™”ì™€ ìƒˆë¡œìš´ ì‹œì‘ì˜ ìƒì§•ì…ë‹ˆë‹¤." },
+    { name: "Temperance", image: "Temperance.jpg", meaning: "ì¡°í™”ì™€ ê· í˜•ì„ ì´ë£¨ì„¸ìš”." },
+    { name: "The Devil", image: "The_Devil.jpg", meaning: "ìœ í˜¹ê³¼ ì§‘ì°©ì—ì„œ ë²—ì–´ë‚˜ì„¸ìš”." },
+    { name: "The Tower", image: "The_Tower.jpg", meaning: "ì˜ˆìƒì¹˜ ëª»í•œ ë³€í™”ì™€ ì¶©ê²©ì´ ìˆì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤." },
+    { name: "The Star", image: "The_Star.jpg", meaning: "í¬ë§ê³¼ ì˜ê°ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "The Moon", image: "The_Moon.jpg", meaning: "ë¶ˆí™•ì‹¤í•¨ê³¼ ê°ì •ì„ ì§ì‹œí•˜ì„¸ìš”." },
+    { name: "The Sun", image: "The_Sun.jpg", meaning: "í–‰ë³µê³¼ ì„±ê³µì´ ì°¾ì•„ì˜µë‹ˆë‹¤." },
+    { name: "Judgement", image: "Judgement.jpg", meaning: "ìê¸° ë°˜ì„±ê³¼ ìƒˆë¡œìš´ ê¸°íšŒì…ë‹ˆë‹¤." },
+    { name: "The World", image: "The_World.jpg", meaning: "ì™„ì„±ê³¼ ì„±ì·¨ì˜ ì‹œê¸°ì…ë‹ˆë‹¤." },
+	    { name: "Ace of Cups", image: "Ace_of_Cups.jpg", meaning: "ìƒˆë¡œìš´ ê°ì •ê³¼ ì‚¬ë‘ì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Two of Cups", image: "Two_of_Cups.jpg", meaning: "ì¡°í™”ë¡œìš´ ê´€ê³„ì™€ íŒŒíŠ¸ë„ˆì‹­ì…ë‹ˆë‹¤." },
+    { name: "Three of Cups", image: "Three_of_Cups.jpg", meaning: "ê¸°ì¨ê³¼ ì¶•í•˜ì˜ ìˆœê°„ì…ë‹ˆë‹¤." },
+    { name: "Four of Cups", image: "Four_of_Cups.jpg", meaning: "ë¬´ê´€ì‹¬ê³¼ ë‚´ì  ê³ ë¯¼ì˜ ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Five of Cups", image: "Five_of_Cups.jpg", meaning: "ìƒì‹¤ê°ê³¼ í›„íšŒì˜ ê°ì •ì…ë‹ˆë‹¤." },
+    { name: "Six of Cups", image: "Six_of_Cups.jpg", meaning: "ì¶”ì–µê³¼ ê³¼ê±°ì˜ íšŒìƒì´ ë‹¤ê°€ì˜µë‹ˆë‹¤." },
+    { name: "Seven of Cups", image: "Seven_of_Cups.jpg", meaning: "í˜¼ë€ê³¼ ì„ íƒì˜ ìˆœê°„ì…ë‹ˆë‹¤." },
+    { name: "Eight of Cups", image: "Eight_of_Cups.jpg", meaning: "ë– ë‚¨ê³¼ ìƒˆë¡œìš´ ì‹œì‘ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "Nine of Cups", image: "Nine_of_Cups.jpg", meaning: "ì†Œë§ì´ ì´ë£¨ì–´ì§€ëŠ” ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Ten of Cups", image: "Ten_of_Cups.jpg", meaning: "ê°€ì¡±ê³¼ ê´€ê³„ì˜ ì™„ì „í•œ í–‰ë³µì…ë‹ˆë‹¤." },
+    { name: "Ace of Pentacles", image: "Ace_of_Pentacles.jpg", meaning: "ë¬¼ì§ˆì  ì„±ê³µê³¼ ê¸°íšŒì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Two of Pentacles", image: "Two_of_Pentacles.jpg", meaning: "ê· í˜•ê³¼ ë‹¤ì¬ë‹¤ëŠ¥í•¨ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Three of Swords", image: "Three_of_Swords.jpg", meaning: "ìŠ¬í””ê³¼ ì´ë³„ì˜ ìƒì§•ì…ë‹ˆë‹¤." },
+    { name: "Four of Wands", image: "Four_of_Wands.jpg", meaning: "ì¶•í•˜ì™€ ì•ˆì •ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+	    { name: "Five of Wands", image: "Five_of_Wands.jpg", meaning: "ê²½ìŸê³¼ ê°ˆë“±ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "Six of Wands", image: "Six_of_Wands.jpg", meaning: "ì„±ê³µê³¼ ì¸ì •ì˜ ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Seven of Wands", image: "Seven_of_Wands.jpg", meaning: "ë°©ì–´ì™€ ë„ì „ì˜ ì‹œê°„ì…ë‹ˆë‹¤." },
+    { name: "Eight of Wands", image: "Eight_of_Wands.jpg", meaning: "ë¹ ë¥¸ ì§„ì „ê³¼ ë³€í™”ê°€ ìˆìŠµë‹ˆë‹¤." },
+    { name: "Nine of Wands", image: "Nine_of_Wands.jpg", meaning: "ì§€ì†ì ì¸ ë…¸ë ¥ê³¼ ë°©ì–´ê°€ í•„ìš”í•©ë‹ˆë‹¤." },
+    { name: "Ten of Wands", image: "Ten_of_Wands.jpg", meaning: "ë¬´ê±°ìš´ ì±…ì„ê³¼ ë¶€ë‹´ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Page of Wands", image: "Page_of_Wands.jpg", meaning: "ìƒˆë¡œìš´ ì•„ì´ë””ì–´ì™€ íƒí—˜ì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Knight of Wands", image: "Knight_of_Wands.jpg", meaning: "ì—´ì •ê³¼ ëª¨í—˜ì ì¸ í–‰ë™ì„ ìƒì§•í•©ë‹ˆë‹¤." },
+    { name: "Queen of Wands", image: "Queen_of_Wands.jpg", meaning: "ìì‹ ê°ê³¼ ì°½ì˜ë ¥ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "King of Wands", image: "King_of_Wands.jpg", meaning: "ë¦¬ë”ì‹­ê³¼ ë¹„ì „ì„ ê°€ì§„ ì‚¬ëŒì…ë‹ˆë‹¤." },
+	    { name: "Ace of Swords", image: "Ace_of_Swords.jpg", meaning: "ì •í™•í•œ ì‚¬ê³ ì™€ ìƒˆë¡œìš´ ì•„ì´ë””ì–´ì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Two of Swords", image: "Two_of_Swords.jpg", meaning: "ê²°ì •ì˜ ê°ˆë¦¼ê¸¸ê³¼ ê°ˆë“±ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "Three of Swords", image: "Three_of_Swords.jpg", meaning: "ìŠ¬í””ê³¼ ì´ë³„ì˜ ìƒì§•ì…ë‹ˆë‹¤." },
+    { name: "Four of Swords", image: "Four_of_Swords.jpg", meaning: "íœ´ì‹ê³¼ íšŒë³µì˜ ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Five of Swords", image: "Five_of_Swords.jpg", meaning: "ìŠ¹ë¦¬ í›„ì˜ ê°ˆë“±ê³¼ í›„íšŒì…ë‹ˆë‹¤." },
+    { name: "Six of Swords", image: "Six_of_Swords.jpg", meaning: "í‰í™”ì™€ ìƒˆë¡œìš´ ì‹œì‘ì„ í–¥í•œ ì—¬í–‰ì…ë‹ˆë‹¤." },
+    { name: "Seven of Swords", image: "Seven_of_Swords.jpg", meaning: "ë¹„ë°€ê³¼ ì†ì„ìˆ˜ì˜ ìœ„í—˜ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Eight of Swords", image: "Eight_of_Swords.jpg", meaning: "ì œí•œëœ ìƒí™©ê³¼ ë‘ë ¤ì›€ì„ ì˜ë¯¸í•©ë‹ˆë‹¤." },
+    { name: "Nine of Swords", image: "Nine_of_Swords.jpg", meaning: "ë¶ˆì•ˆê³¼ ê±±ì •ìœ¼ë¡œ ì¸í•œ ê³ í†µì…ë‹ˆë‹¤." },
+    { name: "Ten of Swords", image: "Ten_of_Swords.jpg", meaning: "ë°°ì‹ ê³¼ ëì„ ë§ì´í•˜ëŠ” ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Page of Swords", image: "Page_of_Swords.jpg", meaning: "í˜¸ê¸°ì‹¬ê³¼ ìƒˆë¡œìš´ ì •ë³´ì— ëŒ€í•œ íƒêµ¬ì…ë‹ˆë‹¤." },
+    { name: "Knight of Swords", image: "Knight_of_Swords.jpg", meaning: "ì‹ ì†í•œ í–‰ë™ê³¼ ê²°ì •ì ì¸ ìˆœê°„ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Queen of Swords", image: "Queen_of_Swords.jpg", meaning: "ëª…í™•í•œ ì‚¬ê³ ì™€ ì§ê´€ë ¥ì„ ê°€ì§„ ì‚¬ëŒì…ë‹ˆë‹¤." },
+    { name: "King of Swords", image: "King_of_Swords.jpg", meaning: "ë…¼ë¦¬ì  ì‚¬ê³ ì™€ ê²°ë‹¨ë ¥ì„ ê°€ì§„ ì‚¬ëŒì…ë‹ˆë‹¤." },
+	    { name: "Ace of Pentacles", image: "Ace_of_Pentacles.jpg", meaning: "ë¬¼ì§ˆì  ì„±ê³µê³¼ ê¸°íšŒì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Two of Pentacles", image: "Two_of_Pentacles.jpg", meaning: "ê· í˜•ê³¼ ë‹¤ì¬ë‹¤ëŠ¥í•¨ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Three of Pentacles", image: "Three_of_Pentacles.jpg", meaning: "í˜‘ë ¥ê³¼ íŒ€ì›Œí¬ë¥¼ í†µí•œ ì„±ê³µì…ë‹ˆë‹¤." },
+    { name: "Four of Pentacles", image: "Four_of_Pentacles.jpg", meaning: "ì¬ì •ì ì¸ ì•ˆì •ê³¼ ì§‘ì°©ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Five of Pentacles", image: "Five_of_Pentacles.jpg", meaning: "ì¬ì •ì  ì–´ë ¤ì›€ê³¼ ê²°í•ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Six of Pentacles", image: "Six_of_Pentacles.jpg", meaning: "ê· í˜•ê³¼ ë‚˜ëˆ”ì˜ ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Seven of Pentacles", image: "Seven_of_Pentacles.jpg", meaning: "ì¸ë‚´ì™€ ì„±ê³¼ë¥¼ ê¸°ë‹¤ë¦¬ëŠ” ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Eight of Pentacles", image: "Eight_of_Pentacles.jpg", meaning: "ê¸°ìˆ ê³¼ ë…¸ë ¥ìœ¼ë¡œ ì„±ì·¨í•˜ëŠ” ì‹œê¸°ì…ë‹ˆë‹¤." },
+    { name: "Nine of Pentacles", image: "Nine_of_Pentacles.jpg", meaning: "ë¬¼ì§ˆì  í’ìš”ì™€ ë…ë¦½ì ì¸ ì„±ì·¨ì…ë‹ˆë‹¤." },
+    { name: "Ten of Pentacles", image: "Ten_of_Pentacles.jpg", meaning: "ê°€ì¡±ê³¼ ì„¸ëŒ€ ê°„ì˜ ë¬¼ì§ˆì  í’ìš”ì™€ ì•ˆì •ì…ë‹ˆë‹¤." },
+    { name: "Page of Pentacles", image: "Page_of_Pentacles.jpg", meaning: "í•™ìŠµê³¼ ìƒˆë¡œìš´ ê¸°íšŒì˜ ì‹œì‘ì…ë‹ˆë‹¤." },
+    { name: "Knight of Pentacles", image: "Knight_of_Pentacles.jpg", meaning: "ì„±ì‹¤í•¨ê³¼ ê¾¸ì¤€í•¨ì„ ë‚˜íƒ€ëƒ…ë‹ˆë‹¤." },
+    { name: "Queen of Pentacles", image: "Queen_of_Pentacles.jpg", meaning: "ì•ˆì •ê³¼ ë¬¼ì§ˆì  í’ìš”ë¥¼ ì¶”êµ¬í•˜ëŠ” ì‚¬ëŒì…ë‹ˆë‹¤." },
+    { name: "King of Pentacles", image: "King_of_Pentacles.jpg", meaning: "ë¶€ì™€ ì•ˆì •ì ì¸ ì„±ì·¨ë¥¼ ì´ë£¬ ì‚¬ëŒì…ë‹ˆë‹¤." },
 
 
-    // ³ª¸ÓÁö Ä«µå µ¥ÀÌÅÍ Ãß°¡
+    // ë‚˜ë¨¸ì§€ ì¹´ë“œ ë°ì´í„° ì¶”ê°€
 ];
 
 function showSelectedCards() {
@@ -163,19 +163,19 @@ function showSelectedCards() {
         cardDiv.classList.add("selected-card");
         cardDiv.style.backgroundImage = `url('${card.image}')`;
 
-        // Ä«µå ÀÌ¸§ Ç¥½Ã
+        // ì¹´ë“œ ì´ë¦„ í‘œì‹œ
         const cardName = document.createElement("div");
         cardName.textContent = card.name;
         cardName.style.fontWeight = "bold";
         cardName.style.marginBottom = "10px";
 
-        // Ä«µå ÀÇ¹Ì Ç¥½Ã
+        // ì¹´ë“œ ì˜ë¯¸ í‘œì‹œ
         const cardMeaning = document.createElement("div");
         cardMeaning.textContent = card.meaning;
         cardMeaning.style.marginTop = "10px";
         cardMeaning.style.fontSize = "0.9em";
 
-        // Ä«µå ¿ä¼Ò Á¶¸³
+        // ì¹´ë“œ ìš”ì†Œ ì¡°ë¦½
         const cardContainerDiv = document.createElement("div");
         cardContainerDiv.appendChild(cardName);
         cardContainerDiv.appendChild(cardDiv);
@@ -200,9 +200,9 @@ function shuffleCards() {
     shuffled.forEach((card, index) => {
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("card", "shuffling");
-        cardDiv.dataset.name = card.name;  // Ä«µå ÀÌ¸§À» ÀúÀå
+        cardDiv.dataset.name = card.name;  // ì¹´ë“œ ì´ë¦„ì„ ì €ì¥
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç ÈÄ µŞ¸éÀ¸·Î Ç¥½Ã
+        // ì• ë‹ˆë©”ì´ì…˜ í›„ ë’·ë©´ìœ¼ë¡œ í‘œì‹œ
         setTimeout(() => {
             cardDiv.classList.remove("shuffling");
         }, 500 + index * 10);
@@ -216,19 +216,19 @@ function flipCard(cardDiv) {
     if (selectedCards.length >= 3 || cardDiv.classList.contains("flipped")) return;
 
     const cardName = cardDiv.dataset.name;
-    const card = tarotCards.find(c => c.name === cardName);  // Ä«µå °´Ã¼ Ã£±â
+    const card = tarotCards.find(c => c.name === cardName);  // ì¹´ë“œ ê°ì²´ ì°¾ê¸°
     cardDiv.classList.add("flipped");
 
-    // Ä«µå ¾Õ¸é ÀÌ¹ÌÁö ¾÷µ¥ÀÌÆ®
-    cardDiv.style.backgroundImage = `url('${card.image}')`;  // 'images' Æú´õ °æ·Î
+    // ì¹´ë“œ ì•ë©´ ì´ë¯¸ì§€ ì—…ë°ì´íŠ¸
+    cardDiv.style.backgroundImage = `url('${card.image}')`;  // 'images' í´ë” ê²½ë¡œ
 
-    // ·£´ıÀ¸·Î »óÇÏ ¹İÀü ¿©ºÎ °áÁ¤ (50% È®·ü)
-    const isReversed = Math.random() > 0.5; // true/false ·£´ı°ª
+    // ëœë¤ìœ¼ë¡œ ìƒí•˜ ë°˜ì „ ì—¬ë¶€ ê²°ì • (50% í™•ë¥ )
+    const isReversed = Math.random() > 0.5; // true/false ëœë¤ê°’
 
-    // ¼±ÅÃµÈ Ä«µå ¹è¿­¿¡ Ä«µå ÀÇ¹Ì¿Í ÇÔ²² reversed »óÅÂ ÀúÀå
+    // ì„ íƒëœ ì¹´ë“œ ë°°ì—´ì— ì¹´ë“œ ì˜ë¯¸ì™€ í•¨ê»˜ reversed ìƒíƒœ ì €ì¥
     selectedCards.push({ name: card.name, image: card.image, meaning: card.meaning, reversed: isReversed });
 
-    // 3°³ÀÇ Ä«µå°¡ ¼±ÅÃµÇ¾úÀ» ¶§, ¼±ÅÃµÈ Ä«µåµéÀ» º¸¿©ÁÜ
+    // 3ê°œì˜ ì¹´ë“œê°€ ì„ íƒë˜ì—ˆì„ ë•Œ, ì„ íƒëœ ì¹´ë“œë“¤ì„ ë³´ì—¬ì¤Œ
     if (selectedCards.length === 3) showSelectedCards();
 }
 function showSelectedCards() {
@@ -239,28 +239,28 @@ function showSelectedCards() {
         const cardDiv = document.createElement("div");
         cardDiv.classList.add("selected-card");
 
-        // Ä«µåÀÇ ÀÌ¹ÌÁö ¹× º¯Çü »óÅÂ Àû¿ë
-        cardDiv.style.backgroundImage = `url('${card.image}')`;  // ¼öÁ¤µÈ °æ·Î
+        // ì¹´ë“œì˜ ì´ë¯¸ì§€ ë° ë³€í˜• ìƒíƒœ ì ìš©
+        cardDiv.style.backgroundImage = `url('${card.image}')`;  // ìˆ˜ì •ëœ ê²½ë¡œ
 
 
 
 
-        // »óÇÏ ¹İÀü ¿©ºÎ¸¦ ¹İ¿µÇÏ¿© Ä«µå È¸Àü Àû¿ë
+        // ìƒí•˜ ë°˜ì „ ì—¬ë¶€ë¥¼ ë°˜ì˜í•˜ì—¬ ì¹´ë“œ íšŒì „ ì ìš©
         cardDiv.style.transform = card.reversed ? "rotate(180deg)" : "rotate(0deg)";
 
-        // Ä«µå ÀÌ¸§ Ç¥½Ã
+        // ì¹´ë“œ ì´ë¦„ í‘œì‹œ
         const cardName = document.createElement("div");
         cardName.textContent = card.name;
         cardName.style.fontWeight = "bold";
         cardName.style.marginBottom = "10px";
 
-        // Ä«µå ÀÇ¹Ì Ç¥½Ã
+        // ì¹´ë“œ ì˜ë¯¸ í‘œì‹œ
         const cardMeaning = document.createElement("div");
         cardMeaning.textContent = card.meaning;
         cardMeaning.style.marginTop = "10px";
         cardMeaning.style.fontSize = "0.9em";
 
-        // Ä«µå ¿ä¼Ò Á¶ÇÕ
+        // ì¹´ë“œ ìš”ì†Œ ì¡°í•©
         const cardContainerDiv = document.createElement("div");
         cardContainerDiv.appendChild(cardName);
         cardContainerDiv.appendChild(cardDiv);
@@ -272,7 +272,7 @@ function showSelectedCards() {
     });
 }
 
-shuffleCards();  // ÃÊ±â Ä«µå ¼¯±â
+shuffleCards();  // ì´ˆê¸° ì¹´ë“œ ì„ê¸°
     </script>
 </body>
 </html>
